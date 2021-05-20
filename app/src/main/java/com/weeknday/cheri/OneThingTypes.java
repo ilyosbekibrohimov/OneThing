@@ -1,13 +1,11 @@
 package com.weeknday.cheri;
 
-public class HirooTypes
+public class OneThingTypes
 {
     // Handler Message Status Definitions
     public static final int STATUS_UNKNOWN = -99999;
 
-    // Android Permission
-    public static final int STATUS_PERMISSION_ALLOW = 100;
-    public static final int STATUS_PERMISSION_DENY = 101;
+
 
     // Kakao Account
     public static final int STATUS_LOGIN_KAKAO_COMPLETE = 1000;
@@ -16,7 +14,6 @@ public class HirooTypes
     public static final int STATUS_LOGIN_KAKAO_SESSIONCLOSED = 1004;
     public static final int STATUS_LOGIN_KAKAO_LOGOUT_SUCCESS = 1500;
     public static final int STATUS_LOGIN_KAKAO_LOGOUT_FAILED = 1501;
-    public static final int STATUS_LOGIN_KAKAO_FAILED = 1997;
     public static final int STATUS_LOGIN_KAKAO_SESSIONOPENFAILED = 1998;
     public static final int STATUS_LOGIN_KAKAO_UNKNOWN = 1999;
 
@@ -24,7 +21,6 @@ public class HirooTypes
     public static final int STATUS_LOGIN_GOOGLE_SIGNINREQUIRED = 2001;
     public static final int STATUS_LOGIN_GOOGLE_LOGOUT_SUCCESS = 2500;
     public static final int STATUS_LOGIN_GOOGLE_LOGOUT_FAILED = 2501;
-    public static final int STATUS_LOGIN_GOOGLE_USERCANCEL = 2995;
     public static final int STATUS_LOGIN_GOOGLE_ONDESTROY = 2996;
     public static final int STATUS_LOGIN_GOOGLE_AUTHFAILED = 2997;
     public static final int STATUS_LOGIN_GOOGLE_CONNECTIONFAILED = 2998;

@@ -25,250 +25,198 @@ import java.net.URL;
 import uk.co.senab.photoview.PhotoViewAttacher;
 
 
-public class ImageDialog
-{
-	private Context			m_Context;
-	private Dialog			m_Dlg;
-	private ImageView		m_ivImage = null;
+public class ImageDialog {
+    private Context m_Context;
+    private Dialog m_Dlg;
+    private ImageView m_ivImage = null;
 
-	private Bitmap			m_UrlImage = null;
-	private String			m_strUrl = "";
-	private boolean			m_bIsDismiss = false;
+    private Bitmap m_UrlImage = null;
+    private String m_strUrl = "";
+    private boolean m_bIsDismiss = false;
 
-	PhotoViewAttacher		m_cPVAttacher = null;
+    PhotoViewAttacher m_cPVAttacher = null;
 
-	private final Handler mhandler = new Handler();
+    private final Handler mhandler = new Handler();
 
-	private ProgressDialog mProgressDialog = null;
+    private ProgressDialog mProgressDialog = null;
 
-	public ImageDialog(Context context)
-	{
-		this.m_Context = context;
+    public ImageDialog(Context context) {
+        this.m_Context = context;
 
-		m_Dlg = new Dialog(context);
-		m_Dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
-		m_Dlg.setOnCancelListener(new DialogInterface.OnCancelListener()
-		{
-			@Override
-			public void onCancel(DialogInterface dialog)
-			{
-				m_bIsDismiss = true;
-				m_Dlg.dismiss();
-			}
-		});
+        m_Dlg = new Dialog(context);
+        m_Dlg.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        m_Dlg.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                m_bIsDismiss = true;
+                m_Dlg.dismiss();
+            }
+        });
 
 
-	}
+    }
 
-	private void showProgressDialog()
-	{
-		mhandler.post(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				if (mProgressDialog == null)
-				{
-					mProgressDialog = new ProgressDialog(m_Context);
-					mProgressDialog.setMessage("Loading...");
-					mProgressDialog.setIndeterminate(true);
+    private void hideProgressDialog() {
+        mhandler.post(new Runnable() {
+            @Override
+            public void run() {
+                if (mProgressDialog != null && mProgressDialog.isShowing()) {
+                    mProgressDialog.hide();
+                }
+            }
+        });
+    }
 
-					mProgressDialog.show();
-				}
-			}
-		});
-	}
+    public boolean IsShowing() {
+        boolean bRes = false;
 
-	private void hideProgressDialog()
-	{
-		mhandler.post(new Runnable()
-		{
-			@Override
-			public void run()
-			{
-				if (mProgressDialog != null && mProgressDialog.isShowing())
-				{
-					mProgressDialog.hide();
-				}
-			}
-		});
-	}
+        if (m_Dlg != null)
+            bRes = m_Dlg.isShowing();
 
-	public boolean IsShowing()
-	{
-		boolean bRes = false;
+        return bRes;
+    }
 
-		if( m_Dlg != null )
-			bRes = m_Dlg.isShowing();
+    private ProgressDialog mWVProgressDialog = null;
 
-		return bRes;
-	}
+    public void show(String strUrl) {
+        m_bIsDismiss = false;
 
-	private ProgressDialog mWVProgressDialog = null;
-	
-	public void show(String strUrl)
-	{
-		m_bIsDismiss = false;
+        m_strUrl = strUrl;
+        m_strUrl = m_strUrl.replaceFirst("https", "http");
 
-		m_strUrl = strUrl;
-		m_strUrl = m_strUrl.replaceFirst("https", "http");
+        View view = LayoutInflater.from(m_Context).inflate(com.weeknday.cheri.R.layout.dlg_image, null);
+        m_Dlg.setContentView(view);
 
-		View view = LayoutInflater.from(m_Context).inflate(com.weeknday.cheri.R.layout.dlg_image, null);
-		m_Dlg.setContentView(view);
+        Thread cThread = new Thread() {
+            @Override
+            public void run() {
+                mhandler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (mWVProgressDialog == null) {
+                            mWVProgressDialog = new ProgressDialog(m_Dlg.getContext());
+                            mWVProgressDialog.setMessage("Loading...");
+                            mWVProgressDialog.setIndeterminate(true);
+                            mWVProgressDialog.setCanceledOnTouchOutside(false);
+                            mWVProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
+                                @Override
+                                public void onCancel(DialogInterface dialog) {
+                                    m_Dlg.dismiss();
+                                }
+                            });
 
-		Thread cThread = new Thread()
-		{
-			@Override
-			public void run()
-			{
-				mhandler.post(new Runnable() {
-					@Override
-					public void run() {
-						if (mWVProgressDialog == null) {
-							mWVProgressDialog = new ProgressDialog(m_Dlg.getContext());
-							mWVProgressDialog.setMessage("Loading...");
-							mWVProgressDialog.setIndeterminate(true);
-							mWVProgressDialog.setCanceledOnTouchOutside(false);
-							mWVProgressDialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
-								@Override
-								public void onCancel(DialogInterface dialog) {
-									m_Dlg.dismiss();
-								}
-							});
+                            mWVProgressDialog.show();
+                        }
+                    }
 
-							mWVProgressDialog.show();
-						}
-					}
+                });
 
-				});
+                try {
+                    URL url = new URL(m_strUrl);
 
-				try
-				{
-					URL url = new URL(m_strUrl);
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setDoInput(true);
+                    connection.connect();
 
-					HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-					connection.setDoInput(true);
-					connection.connect();
+                    InputStream in = connection.getInputStream();
+                    BitmapFactory.Options options = new BitmapFactory.Options();
+                    options.inSampleSize = 2;
 
-					InputStream in = connection.getInputStream();
-					BitmapFactory.Options options = new BitmapFactory.Options();
-					options.inSampleSize = 2;
+                    m_UrlImage = BitmapFactory.decodeStream(in, null, options);
 
-					m_UrlImage = BitmapFactory.decodeStream(in, null, options);
+                    mhandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            if (mWVProgressDialog != null) {
+                                if (mWVProgressDialog.isShowing()) {
+                                    mWVProgressDialog.dismiss();
+                                    mWVProgressDialog = null;
+                                }
 
-					mhandler.post(new Runnable()
-					{
-						@Override
-						public void run()
-						{
-							if (mWVProgressDialog != null)
-							{
-								if (mWVProgressDialog.isShowing()) {
-									mWVProgressDialog.dismiss();
-									mWVProgressDialog = null;
-								}
+                            }
+                        }
+                    });
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        };
+        cThread.start();
 
-							}
-						}
-					});
-				}
-				catch (MalformedURLException e)
-				{
-					e.printStackTrace();
-				}
-				catch (IOException e)
-				{
-					e.printStackTrace();
-				}
-			}
-		};
-		cThread.start();
-
-		try
-		{
-			cThread.join();
+        try {
+            cThread.join();
 
             hideProgressDialog();
 
-			WindowManager.LayoutParams params = m_Dlg.getWindow().getAttributes();
+            WindowManager.LayoutParams params = m_Dlg.getWindow().getAttributes();
 
-			if( m_UrlImage != null )
-			{
-				params.width = WindowManager.LayoutParams.MATCH_PARENT;
-				params.height = WindowManager.LayoutParams.WRAP_CONTENT;
+            if (m_UrlImage != null) {
+                params.width = WindowManager.LayoutParams.MATCH_PARENT;
+                params.height = WindowManager.LayoutParams.WRAP_CONTENT;
 
-				m_Dlg.getWindow().setAttributes((WindowManager.LayoutParams) params);
-			}
+                m_Dlg.getWindow().setAttributes((WindowManager.LayoutParams) params);
+            }
 
-			m_ivImage = (ImageView) view.findViewById(com.weeknday.cheri.R.id.dlg_ivImage);
+            m_ivImage = (ImageView) view.findViewById(com.weeknday.cheri.R.id.dlg_ivImage);
 
-			//m_ivImage.setImageResource(android.R.color.transparent);
-			m_ivImage.setScaleType(ImageView.ScaleType.FIT_CENTER); // 레이아웃 크기에 이미지를 맞춘다
-			//m_ivImage.setScaleType(ImageView.ScaleType.MATRIX);
+            //m_ivImage.setImageResource(android.R.color.transparent);
+            m_ivImage.setScaleType(ImageView.ScaleType.FIT_CENTER); // 레이아웃 크기에 이미지를 맞춘다
+            //m_ivImage.setScaleType(ImageView.ScaleType.MATRIX);
 
-			m_ivImage.setOnTouchListener(ViewListener);
-			m_ivImage.setImageBitmap(m_UrlImage);
-		}
-		catch (InterruptedException e)
-		{
-			e.printStackTrace();
-		}
+            m_ivImage.setOnTouchListener(ViewListener);
+            m_ivImage.setImageBitmap(m_UrlImage);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
 
-		m_ivImage.setVisibility(View.VISIBLE);
+        m_ivImage.setVisibility(View.VISIBLE);
 
-		m_Dlg.show();
-	}
+        m_Dlg.show();
+    }
 
-	public boolean IsDismiss()
-	{
-		return m_bIsDismiss;
-	}
+    public boolean IsDismiss() {
+        return m_bIsDismiss;
+    }
 
-	public void dismiss()
-	{
-		m_bIsDismiss = true;
+    public void dismiss() {
+        m_bIsDismiss = true;
 
-        if( m_ivImage != null )
-        {
+        if (m_ivImage != null) {
             m_ivImage.setVisibility(View.GONE);
             m_ivImage.destroyDrawingCache();
         }
 
-        if( m_cPVAttacher != null )
-        {
+        if (m_cPVAttacher != null) {
             m_cPVAttacher.cleanup();
             m_cPVAttacher = null;
         }
 
-		// Recycle Old ImageView
-		Drawable drawable = m_ivImage.getDrawable();
-		if (drawable instanceof BitmapDrawable)
-		{
-			BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
-			Bitmap bitmap = bitmapDrawable.getBitmap();
-			bitmap.recycle();
-		}
+        // Recycle Old ImageView
+        Drawable drawable = m_ivImage.getDrawable();
+        if (drawable instanceof BitmapDrawable) {
+            BitmapDrawable bitmapDrawable = (BitmapDrawable) drawable;
+            Bitmap bitmap = bitmapDrawable.getBitmap();
+            bitmap.recycle();
+        }
 
         m_Dlg.dismiss();
-	}
+    }
 
-	private final View.OnTouchListener ViewListener = new View.OnTouchListener()
-	{
-		@Override
-		public boolean onTouch(View v, MotionEvent event)
-		{
-			m_cPVAttacher = new PhotoViewAttacher(m_ivImage);
-			m_cPVAttacher.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener()
-			{
-				@Override
-				public void onViewTap(View view, float v, float v2)
-				{
+    private final View.OnTouchListener ViewListener = new View.OnTouchListener() {
+        @Override
+        public boolean onTouch(View v, MotionEvent event) {
+            m_cPVAttacher = new PhotoViewAttacher(m_ivImage);
+            m_cPVAttacher.setOnViewTapListener(new PhotoViewAttacher.OnViewTapListener() {
+                @Override
+                public void onViewTap(View view, float v, float v2) {
                     m_bIsDismiss = true;
-					m_Dlg.dismiss();
-				}
-			});
+                    m_Dlg.dismiss();
+                }
+            });
 
-			return false;
-		}
-	};
+            return false;
+        }
+    };
 }

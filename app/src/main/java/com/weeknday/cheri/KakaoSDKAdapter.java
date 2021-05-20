@@ -1,5 +1,4 @@
 package com.weeknday.cheri;
-import android.app.Activity;
 import android.content.Context;
 
 import com.kakao.auth.ApprovalType;
@@ -43,10 +42,6 @@ public class KakaoSDKAdapter extends KakaoAdapter {
     @Override
     public IApplicationConfig getApplicationConfig() {
         return new IApplicationConfig() {
-            //@Override
-            public Activity getTopActivity() {
-                return GlobalApplication.getCurrentActivity();
-            }
 
             @Override
             public Context getApplicationContext() {

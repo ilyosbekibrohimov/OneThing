@@ -45,7 +45,7 @@ public class GoogleActivity extends FragmentActivity implements GoogleApiClient.
     private static Activity m_cAct = null;
 
     private static boolean m_bAuthResult = false;
-    private static int m_nAuthState = HirooTypes.STATUS_UNKNOWN;
+    private static int m_nAuthState = OneThingTypes.STATUS_UNKNOWN;
     private static String m_strAuthStateMsg = "notlogin";
 
     private static String m_strID = "";
@@ -61,7 +61,7 @@ public class GoogleActivity extends FragmentActivity implements GoogleApiClient.
 
     // Status Flag in this Activity
     private static boolean m_bIsInitCtrl = false;
-    private static int m_nCurStatus = HirooTypes.STATUS_LOGIN_GOOGLE_UNKNOWN;
+    private static int m_nCurStatus = OneThingTypes.STATUS_LOGIN_GOOGLE_UNKNOWN;
 
     private void InitControls() {
         // Views
@@ -202,16 +202,16 @@ public class GoogleActivity extends FragmentActivity implements GoogleApiClient.
                 mStatusTextView.setText(acct.getDisplayName());
 
             if (mHandler != null) {
-                m_nCurStatus = HirooTypes.STATUS_LOGIN_GOOGLE_COMPLETE;
+                m_nCurStatus = OneThingTypes.STATUS_LOGIN_GOOGLE_COMPLETE;
                 mHandler.sendEmptyMessage(m_nCurStatus);
             }
         } else {
             // Signed out, show unauthenticated UI.
             if (mHandler != null) {
                 if (m_nAuthState == 4) {     // SIGN_IN_REQUIRED
-                    m_nCurStatus = HirooTypes.STATUS_LOGIN_GOOGLE_SIGNINREQUIRED;
+                    m_nCurStatus = OneThingTypes.STATUS_LOGIN_GOOGLE_SIGNINREQUIRED;
                 } else {
-                    m_nCurStatus = HirooTypes.STATUS_LOGIN_GOOGLE_AUTHFAILED;
+                    m_nCurStatus = OneThingTypes.STATUS_LOGIN_GOOGLE_AUTHFAILED;
                 }
 
                 mHandler.sendEmptyMessage(m_nCurStatus);
@@ -303,9 +303,9 @@ public class GoogleActivity extends FragmentActivity implements GoogleApiClient.
                     @Override
                     public void onResult(Status status) {
                         if (status.isSuccess())
-                            m_nCurStatus = HirooTypes.STATUS_LOGIN_GOOGLE_LOGOUT_SUCCESS;
+                            m_nCurStatus = OneThingTypes.STATUS_LOGIN_GOOGLE_LOGOUT_SUCCESS;
                         else
-                            m_nCurStatus = HirooTypes.STATUS_LOGIN_GOOGLE_LOGOUT_FAILED;
+                            m_nCurStatus = OneThingTypes.STATUS_LOGIN_GOOGLE_LOGOUT_FAILED;
 
                         if (mHandler != null) {
                             mHandler.sendEmptyMessage(m_nCurStatus);
@@ -336,7 +336,7 @@ public class GoogleActivity extends FragmentActivity implements GoogleApiClient.
         m_Log.write(AndroidLog.LOGTYPE_INFO, "          : %d", connectionResult.getErrorCode());
         m_Log.write(AndroidLog.LOGTYPE_INFO, "          : %s", connectionResult.getErrorMessage());
         if (mHandler != null) {
-            m_nCurStatus = HirooTypes.STATUS_LOGIN_GOOGLE_CONNECTIONFAILED;
+            m_nCurStatus = OneThingTypes.STATUS_LOGIN_GOOGLE_CONNECTIONFAILED;
             mHandler.sendEmptyMessage(m_nCurStatus);
         }
 

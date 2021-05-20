@@ -20,10 +20,6 @@ public class GlobalApplication extends Application {
         return currentActivity;
     }
 
-    public static void setCurrentActivity(Activity currentActivity) {
-        GlobalApplication.currentActivity = currentActivity;
-    }
-
     /**
      * singleton
      * @return singleton

@@ -67,27 +67,24 @@ public class AndroidFile
 		if( nErr < 2 )
 		{
 			File f = new File( (strFilePath+strFileName) );
-			if( f != null )
+			if( !f.exists() )
 			{
-				if( !f.exists() )
+				try
 				{
-					try
-					{
-						if( !f.createNewFile() )
-							nFnErr = UERR_API_CALL;
-					}
-					catch( IOException e )
-					{
-						e.printStackTrace();
-					}
-					finally
-					{
-						nFnErr = UERR_EXCEPTION;					
-					}
+					if( !f.createNewFile() )
+						nFnErr = UERR_API_CALL;
 				}
-				else
-					nFnErr = UERR_ALREADY_EXIST;
+				catch( IOException e )
+				{
+					e.printStackTrace();
+				}
+				finally
+				{
+					nFnErr = UERR_EXCEPTION;
+				}
 			}
+			else
+				nFnErr = UERR_ALREADY_EXIST;
 		}
 		else
 			nFnErr = nErr * 10;
@@ -108,16 +105,13 @@ public class AndroidFile
 		int nFnErr = 0;
 
 		File f = new File( strPathName );
-		if( f != null )
+		if( f.exists() )
 		{
-			if( f.exists() )
-			{
-				if( !f.delete() )
-					nFnErr = UERR_API_CALL;
-			}
-			else
-				nFnErr = UERR_NOT_EXIST;
+			if( !f.delete() )
+				nFnErr = UERR_API_CALL;
 		}
+		else
+			nFnErr = UERR_NOT_EXIST;
 
 		return nFnErr;
 	}
@@ -133,14 +127,13 @@ public class AndroidFile
 		{
 			if(listFile.length > 0)
 			{
-				for(int i = 0 ; i < listFile.length ; i++)
-				{
-					if(listFile[i].isFile())
-						listFile[i].delete();
+				for (File file : listFile) {
+					if (file.isFile())
+						file.delete();
 					else
-						removeDirectory(listFile[i].getPath());
-					
-					listFile[i].delete();
+						removeDirectory(file.getPath());
+
+					file.delete();
 				}
 			}
 		}
@@ -163,11 +156,8 @@ public class AndroidFile
 		File f = null;
 
 		f = new File( strFile );
-		if( f != null )
-		{
-			if( !f.exists() )
-				f = null;
-		}
+		if( !f.exists() )
+			f = null;
 
 		return f;
 	}
@@ -183,7 +173,7 @@ public class AndroidFile
 		@return			:	0				- 성공
 							otherwise		- 실패
 	 */
-	public int writeFile( String strFile, boolean bAppend, byte[] strWriteData )
+	public void writeFile(String strFile, boolean bAppend, byte[] strWriteData )
 	{
 		int nFnErr = 0;
 
@@ -215,7 +205,6 @@ public class AndroidFile
 		else
 			nFnErr = UERR_FILE_OPEN;
 
-		return nFnErr;
 	}
 
 

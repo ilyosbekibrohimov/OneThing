@@ -64,7 +64,7 @@ public class AndroidHttpUtil
 					{
 						String line = br.readLine();
 						if (line == null) break;
-						html.append(line + '\n'); 
+						html.append(line).append('\n');
 					}
 					br.close();
 				}

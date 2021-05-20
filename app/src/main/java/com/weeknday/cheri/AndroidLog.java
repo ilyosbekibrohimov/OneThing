@@ -30,7 +30,7 @@ public class AndroidLog
 		@param			:	strLogFileName	- 로그 파일명
 		@return			:	0				- 성공
 	*/
-	public int initialize( String strPackageName, String strLogFileName, boolean bDeleteLogFile )
+	public void initialize(String strPackageName, String strLogFileName, boolean bDeleteLogFile )
 	{
 		int nRes = 0;
 		
@@ -48,11 +48,11 @@ public class AndroidLog
 		if( bDeleteLogFile )
 		{
 			// Previous Log File in Log Directory.
-			m_File.removeDirectory(strPath);
+			AndroidFile.removeDirectory(strPath);
 		}
 
 		if(!m_bIsWrite)
-			return 0;
+			return;
 		
 		nRes = m_File.createDirectory( strPath );
 		m_strLogPath = strPath;
@@ -72,8 +72,7 @@ public class AndroidLog
 		m_strLogFile = m_strLogPath + m_strLogFileName;
 		
 		//Log.i("AndroidLog", m_strLogFile); 
-		
-		return nRes;
+
 	}
 
 	public void SetIsWriteLog(boolean bWrite)

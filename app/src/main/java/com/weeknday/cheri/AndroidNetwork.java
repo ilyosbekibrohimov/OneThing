@@ -7,11 +7,7 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.telephony.TelephonyManager;
 
-/**
- * Android Permission
- * <uses-permission android:name="android.permission.INTERNET" />
- * <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
- */
+
 
 public class AndroidNetwork extends BroadcastReceiver
 {

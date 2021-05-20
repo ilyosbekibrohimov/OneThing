@@ -9,16 +9,23 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.os.Build;
 
+import androidx.annotation.NonNull;
 import androidx.core.app.NotificationCompat;
 
 import com.google.firebase.messaging.RemoteMessage;
 
+import org.jetbrains.annotations.NotNull;
 
-public class HirooFBMessagingService extends com.google.firebase.messaging.FirebaseMessagingService
+
+public class OneThingMessagingService extends com.google.firebase.messaging.FirebaseMessagingService
 {
-    private static final String TAG = "FirebaseMsgService";
 
-    // [START receive_message]
+
+    @Override
+    public void onNewToken(@NonNull @NotNull String s) {
+        super.onNewToken(s);
+    }
+
     @Override
     public void onMessageReceived(RemoteMessage remoteMessage)
     {
@@ -32,9 +39,6 @@ public class HirooFBMessagingService extends com.google.firebase.messaging.Fireb
            // String description = getString(R.string.channel_description);
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
             NotificationChannel channel = new NotificationChannel("cheri", name, importance);
-           // channel.setDescription(description);
-            // Register the channel with the system; you can't change the importance
-            // or other notification behaviors after this
             NotificationManager notificationManager = getSystemService(NotificationManager.class);
             notificationManager.createNotificationChannel(channel);
         }

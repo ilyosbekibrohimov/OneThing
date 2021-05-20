@@ -149,7 +149,7 @@ public class PackageUpdateDialog extends Dialog
 
     public void SetDialogControls()
     {
-        ShowContents(View.VISIBLE);
+        ShowContents();
 
         switch(m_nStatus)
         {
@@ -171,10 +171,10 @@ public class PackageUpdateDialog extends Dialog
         }
     }
 
-    private void ShowContents(int nVisibility)
+    private void ShowContents()
     {
         if( m_lyContents != null )
-            m_lyContents.setVisibility(nVisibility);
+            m_lyContents.setVisibility(View.VISIBLE);
     }
 
     private void ShowBtnGroupYN(int nVisibility)

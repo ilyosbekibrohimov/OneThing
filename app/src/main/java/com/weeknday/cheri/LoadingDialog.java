@@ -46,9 +46,7 @@ public class LoadingDialog extends Dialog
 
         m_ivImage.setBackgroundColor(Color.TRANSPARENT);
         m_cAnim = (AnimationDrawable) m_ivImage.getDrawable();
-        //m_cAnim = (AnimationDrawable) m_ivImage.getBackground();
 
-        //m_cAnim.setOneShot(false);
     }
 
     @Override

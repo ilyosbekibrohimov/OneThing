@@ -36,7 +36,7 @@ public class NaverLogin extends Activity
 
     private boolean m_bAuthResult = false;
     private String  m_strAuthState = "";
-    private int     m_nAuthState = HirooTypes.STATUS_UNKNOWN;
+    private int     m_nAuthState = OneThingTypes.STATUS_UNKNOWN;
     private String  m_strAuthStateMsg = "notlogin";
 
     private String m_strID = "";
@@ -109,7 +109,7 @@ public class NaverLogin extends Activity
 
                         if( mHandler != null )
                         {
-                            m_nAuthState = HirooTypes.STATUS_LOGIN_NAVER_COMPLETE;
+                            m_nAuthState = OneThingTypes.STATUS_LOGIN_NAVER_COMPLETE;
                             mHandler.sendEmptyMessage(m_nAuthState);
                         }
                     }
@@ -121,7 +121,7 @@ public class NaverLogin extends Activity
                 {
                     if( mHandler != null )
                     {
-                        m_nAuthState = HirooTypes.STATUS_LOGIN_NAVER_USERCANCEL;
+                        m_nAuthState = OneThingTypes.STATUS_LOGIN_NAVER_USERCANCEL;
                         mHandler.sendEmptyMessage(m_nAuthState);
                     }
                 }
@@ -150,9 +150,9 @@ public class NaverLogin extends Activity
     {
         //mOAuthLoginInstance.logout(m_cContext);
         if( mOAuthLoginInstance.logoutAndDeleteToken(m_cContext) )
-            m_nAuthState = HirooTypes.STATUS_LOGIN_NAVER_LOGOUT_SUCCESS;
+            m_nAuthState = OneThingTypes.STATUS_LOGIN_NAVER_LOGOUT_SUCCESS;
         else
-            m_nAuthState = HirooTypes.STATUS_LOGIN_NAVER_LOGOUT_FAILED;
+            m_nAuthState = OneThingTypes.STATUS_LOGIN_NAVER_LOGOUT_FAILED;
     }
 
     public int GetLastStatus()
@@ -177,7 +177,7 @@ public class NaverLogin extends Activity
 
             if( mHandler != null )
             {
-                m_nAuthState = HirooTypes.STATUS_LOGIN_NAVER_DELETETOKEN;
+                m_nAuthState = OneThingTypes.STATUS_LOGIN_NAVER_DELETETOKEN;
                 mHandler.sendEmptyMessage(m_nAuthState);
             }
 

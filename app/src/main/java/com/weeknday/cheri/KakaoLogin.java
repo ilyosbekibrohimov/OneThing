@@ -28,7 +28,7 @@ public class KakaoLogin //extends Activity
     private SessionCallback mKakaocallback;
 
     // Send Data
-    private static int    m_nAuthState = HirooTypes.STATUS_UNKNOWN;
+    private static int    m_nAuthState = OneThingTypes.STATUS_UNKNOWN;
     private static String m_strAuthStateMsg = "notlogin";
     private static String m_strAToken = "";
     private static String m_strRToken = "";
@@ -36,7 +36,7 @@ public class KakaoLogin //extends Activity
     private static String m_strUserID = "";
     private static String m_strProfileURL = "";
 
-    private int m_nStatus = HirooTypes.STATUS_LOGIN_KAKAO_UNKNOWN;
+    private int m_nStatus = OneThingTypes.STATUS_LOGIN_KAKAO_UNKNOWN;
 
     private static WebActivity.SendMassgeHandler m_Handler = null;
 
@@ -73,11 +73,11 @@ public class KakaoLogin //extends Activity
         strSessionState = strSessionState.toUpperCase();
         if( strSessionState.compareTo("CLOSED") == 0 )
         {
-            m_nStatus = HirooTypes.STATUS_LOGIN_KAKAO_SESSIONCLOSED;
+            m_nStatus = OneThingTypes.STATUS_LOGIN_KAKAO_SESSIONCLOSED;
             return m_nStatus;
         }
 
-        m_nStatus = HirooTypes.STATUS_LOGIN_KAKAO_SESSIONOPEN;
+        m_nStatus = OneThingTypes.STATUS_LOGIN_KAKAO_SESSIONOPEN;
         return m_nStatus;
     }
 
@@ -98,7 +98,7 @@ public class KakaoLogin //extends Activity
         {
             if( m_Handler != null )
             {
-                m_nStatus = HirooTypes.STATUS_LOGIN_KAKAO_SESSIONCLOSED;
+                m_nStatus = OneThingTypes.STATUS_LOGIN_KAKAO_SESSIONCLOSED;
                 m_Handler.sendEmptyMessage(m_nStatus);
             }
         }
@@ -110,25 +110,25 @@ public class KakaoLogin //extends Activity
             @Override
             public void onFailure(ErrorResult errorResult) {
                 Logger.e(errorResult.toString());
-                m_nStatus = HirooTypes.STATUS_LOGIN_KAKAO_LOGOUT_FAILED;
+                m_nStatus = OneThingTypes.STATUS_LOGIN_KAKAO_LOGOUT_FAILED;
             }
 
             @Override
             public void onSessionClosed(ErrorResult errorResult) {
                 //redirectLoginActivity();
-                m_nStatus = HirooTypes.STATUS_LOGIN_KAKAO_LOGOUT_FAILED;
+                m_nStatus = OneThingTypes.STATUS_LOGIN_KAKAO_LOGOUT_FAILED;
             }
 
             @Override
             public void onNotSignedUp() {
                 //redirectSignupActivity();
-                m_nStatus = HirooTypes.STATUS_LOGIN_KAKAO_LOGOUT_FAILED;
+                m_nStatus = OneThingTypes.STATUS_LOGIN_KAKAO_LOGOUT_FAILED;
             }
 
             @Override
             public void onSuccess(Long userId) {
                 //redirectLoginActivity();
-                m_nStatus = HirooTypes.STATUS_LOGIN_KAKAO_LOGOUT_SUCCESS;
+                m_nStatus = OneThingTypes.STATUS_LOGIN_KAKAO_LOGOUT_SUCCESS;
             }
         });
     }
@@ -160,13 +160,13 @@ public class KakaoLogin //extends Activity
             {
                 Log.d("TAG" , exception.getMessage());
 
-                m_nAuthState = HirooTypes.STATUS_LOGIN_KAKAO_SESSIONOPENFAILED;
+                m_nAuthState = OneThingTypes.STATUS_LOGIN_KAKAO_SESSIONOPENFAILED;
                 m_strAuthStateMsg = exception.getMessage();
 
                 m_Log.write(AndroidLog.LOGTYPE_INFO, "KakaoException : %s", m_strAuthStateMsg);
 
                 if( m_Handler != null )
-                    m_Handler.sendEmptyMessage(HirooTypes.STATUS_LOGIN_KAKAO_SESSIONOPENFAILED);
+                    m_Handler.sendEmptyMessage(OneThingTypes.STATUS_LOGIN_KAKAO_SESSIONOPENFAILED);
             }
         }
     }
@@ -195,7 +195,7 @@ public class KakaoLogin //extends Activity
 
                 if( m_Handler != null )
                 {
-                    m_Handler.sendEmptyMessage(HirooTypes.STATUS_LOGIN_KAKAO_COMPLETE);
+                    m_Handler.sendEmptyMessage(OneThingTypes.STATUS_LOGIN_KAKAO_COMPLETE);
                 }
             }
 
@@ -211,7 +211,7 @@ public class KakaoLogin //extends Activity
                 m_Log.write(AndroidLog.LOGTYPE_INFO, "Error Msg : %d", m_strAuthStateMsg);
 
                 if( m_Handler != null )
-                    m_Handler.sendEmptyMessage(HirooTypes.STATUS_LOGIN_KAKAO_COMPLETE);
+                    m_Handler.sendEmptyMessage(OneThingTypes.STATUS_LOGIN_KAKAO_COMPLETE);
             }
 
             @Override
@@ -227,7 +227,7 @@ public class KakaoLogin //extends Activity
                 m_strProfileURL = userProfile.getProfileImagePath();
 
                 if( m_Handler != null )
-                    m_Handler.sendEmptyMessage(HirooTypes.STATUS_LOGIN_KAKAO_COMPLETE);
+                    m_Handler.sendEmptyMessage(OneThingTypes.STATUS_LOGIN_KAKAO_COMPLETE);
             }
 
             @Override
@@ -237,7 +237,7 @@ public class KakaoLogin //extends Activity
 
                 // 자동가입이 아닐경우 동의창
                 if( m_Handler != null )
-                    m_Handler.sendEmptyMessage(HirooTypes.STATUS_LOGIN_KAKAO_NOTSIGNEDUP);
+                    m_Handler.sendEmptyMessage(OneThingTypes.STATUS_LOGIN_KAKAO_NOTSIGNEDUP);
             }
         });
     }
@@ -265,10 +265,7 @@ public class KakaoLogin //extends Activity
 
     public String ResultData()
     {
-        //SetTimeout(-1);
 
-        // 현재(2017.03.14) Kakao는 Email 정보를 얻을 수 없다.
-        // "Status","StatusMessage","AccessToken","RefreshToken","Google ID","Email","DisplayName"
         String strRes = "";
         strRes = m_nAuthState + "," + m_strAuthStateMsg + "," + m_strAToken + "," + m_strRToken + "," + m_strUserID + ","
                 + "" + "," + m_strUserName;
@@ -307,7 +304,7 @@ public class KakaoLogin //extends Activity
     public void SetTimeout(int nTimeout )
     {
         int nCurTime = 0;
-        while(m_nStatus != HirooTypes.STATUS_LOGIN_KAKAO_COMPLETE )
+        while(m_nStatus != OneThingTypes.STATUS_LOGIN_KAKAO_COMPLETE )
         {
             if( nCurTime > nTimeout )
                 break;
