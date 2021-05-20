@@ -1,4 +1,4 @@
-package com.weeknday.cheri;
+package com.weeknday.onething;
 import android.content.Context;
 
 import com.kakao.auth.ApprovalType;

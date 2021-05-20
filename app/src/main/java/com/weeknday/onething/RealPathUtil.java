@@ -1,4 +1,4 @@
-package com.weeknday.cheri;
+package com.weeknday.onething;
 
 import android.annotation.SuppressLint;
 import android.content.ContentUris;
@@ -40,7 +40,7 @@ public class RealPathUtil {
             // DownloadsProvider
             else if (isDownloadsDocument(uri)) {
                 final String id = DocumentsContract.getDocumentId(uri);
-                final Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.valueOf(id));
+                final Uri contentUri = ContentUris.withAppendedId(Uri.parse("content://downloads/public_downloads"), Long.parseLong(id));
 
                 return getDataColumn(context, contentUri, null, null);
             }

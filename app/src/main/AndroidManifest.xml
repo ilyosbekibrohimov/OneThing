@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.weeknday.cheri">
+    package="com.weeknday.onething">
 
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -17,7 +17,8 @@
     </queries>
 
     <application
-        android:name="com.weeknday.cheri.GlobalApplication"
+        android:requestLegacyExternalStorage="true"
+        android:name=".GlobalApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -26,7 +27,7 @@
         android:hardwareAccelerated="true" >
 
         <activity
-            android:name="com.weeknday.cheri.WebActivity"
+            android:name=".WebActivity"
             android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -40,7 +41,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.weeknday.cheri.CreateWebViewActivity"
+            android:name=".CreateWebViewActivity"
             android:screenOrientation="fullSensor">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -50,7 +51,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.weeknday.cheri.GoogleActivity"
+            android:name=".GoogleActivity"
             android:excludeFromRecents="true"
             android:noHistory="true"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
@@ -71,7 +72,7 @@
             android:screenOrientation="fullSensor"/>
 
         <!-- kakao link에서 사용하는 액티비티를 등록 -->
-        <activity android:name="com.weeknday.cheri.GlobalApplication">
+        <activity android:name=".GlobalApplication">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
                 <category android:name="android.intent.category.DEFAULT" />
@@ -92,7 +93,7 @@
             android:value="@string/kakao_app_key" />
 
         <service
-            android:name="com.weeknday.cheri.OneThingMessagingService"
+            android:name="com.weeknday.onething.OneThingMessagingService"
             android:enabled="true" >
             <intent-filter>
                 <action android:name="com.google.firebase.MESSAGING_EVENT"/>

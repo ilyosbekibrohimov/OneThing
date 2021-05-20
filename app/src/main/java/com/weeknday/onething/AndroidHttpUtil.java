@@ -1,4 +1,4 @@
-package com.weeknday.cheri;
+package com.weeknday.onething;
 
 import android.util.Log;
 
@@ -31,7 +31,7 @@ public class AndroidHttpUtil
 		try
 		{
 			URL url = new URL(addr);
-			HttpURLConnection conn = null;
+			HttpURLConnection conn;
 			
 			if(url.getProtocol().toLowerCase().equals("https"))
 			{ 

@@ -1,4 +1,4 @@
-package com.weeknday.cheri;
+package com.weeknday.onething;
 
 public class OneThingTypes
 {

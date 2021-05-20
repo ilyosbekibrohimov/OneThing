@@ -1,4 +1,4 @@
-package com.weeknday.cheri;
+package com.weeknday.onething;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -22,7 +22,6 @@ import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
 public class CreateWebViewActivity extends Activity {
-    private final String TAG = "CreateWebViewActivity";
 
     private WebView mWebView = null;
     private Activity m_cAct = null;
@@ -49,19 +48,16 @@ public class CreateWebViewActivity extends Activity {
     public static final int PARAM_TYPE_PAYMENTGATEWAY = 1;
 
 
-    private void InitControls() {
-        mWebView = (WebView) findViewById(com.weeknday.cheri.R.id.wvCreate);
-    }
 
+    //region overrides
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(com.weeknday.cheri.R.layout.act_createwebview);
+        setContentView(com.weeknday.onething.R.layout.act_createwebview);
 
         m_cAct = this;
 
-        InitControls();
-
+        mWebView = (WebView) findViewById(com.weeknday.onething.R.id.wvCreate);
         // Intent로 넘어온 데이터 확인
         GetIntentData(getIntent());
 
@@ -73,7 +69,36 @@ public class CreateWebViewActivity extends Activity {
         }
     }
 
-    private boolean GetIntentData(Intent cIntent) {
+    @Override
+    public void onBackPressed() {
+        WebBackForwardList cBackUrlListMain;
+
+        cBackUrlListMain = mWebView.copyBackForwardList();
+
+        int nIndex = cBackUrlListMain.getCurrentIndex();
+
+
+
+        if (nIndex > 0 || mWebView.canGoBack())
+            mWebView.goBackOrForward(-1);   // 이전 페이지로 이동.
+        else {
+            mWebView.clearHistory();
+            mWebView.removeView(mWebView);    // 화면에서 제거
+            mWebView.setVisibility(View.GONE);
+            mWebView.destroy();
+            mWebView = null;
+
+            this.finish();
+        }
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+    }
+    //endregion
+
+    private void GetIntentData(Intent cIntent) {
         boolean bRes = false;
 
         Bundle bundle = cIntent.getExtras();
@@ -102,14 +127,13 @@ public class CreateWebViewActivity extends Activity {
             bRes = true;
         }
 
-        return bRes;
     }
 
     private void SetFlagFromOptions(String strOptions) {
         String[] strOptionData = strOptions.split(",");
 
-        for (int i = 0; i < strOptionData.length; i++) {
-            if (strOptionData[i].compareToIgnoreCase("zoom") == 0)
+        for (String strOptionDatum : strOptionData) {
+            if (strOptionDatum.compareToIgnoreCase("zoom") == 0)
                 m_bIsZoom = true;
         }
     }
@@ -146,32 +170,7 @@ public class CreateWebViewActivity extends Activity {
         mWebView.loadUrl(strLoadUrl);
     }
 
-    private void SetWebViewSetting() {
-        mWebView.getSettings().setJavaScriptEnabled(true);
-        mWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-        mWebView.getSettings().setAllowFileAccess(true);
-        mWebView.getSettings().setAllowContentAccess(true);
-        mWebView.getSettings().setLoadsImagesAutomatically(true);
-        mWebView.getSettings().setPluginState(WebSettings.PluginState.ON);
 
-        mWebView.getSettings().setSaveFormData(true);
-
-        mWebView.clearCache(true);
-        mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        mWebView.getSettings().setAppCacheEnabled(false);
-        mWebView.getSettings().setRenderPriority(WebSettings.RenderPriority.HIGH);
-
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT)
-            mWebView.setLayerType(View.LAYER_TYPE_HARDWARE, null);
-        else
-            mWebView.setLayerType(View.LAYER_TYPE_SOFTWARE, null);
-
-        mWebView.setHorizontalScrollBarEnabled(false);
-        mWebView.setVerticalScrollBarEnabled(false);
-
-        mWebView.setWebChromeClient(new CreateWebChromeClient());
-        mWebView.setWebViewClient(new CreateWebViewClient());
-    }
 
     private boolean isPackageInstalled(String packagename, Context context) {
         PackageManager pm = context.getPackageManager();
@@ -184,34 +183,6 @@ public class CreateWebViewActivity extends Activity {
     }
 
 
-    @Override
-    public void onBackPressed() {
-        WebBackForwardList cBackUrlListMain = null;
-
-        cBackUrlListMain = mWebView.copyBackForwardList();
-
-        int nIndex = cBackUrlListMain.getCurrentIndex();
-
-        // 현재 페이지 경로 정보
-        String strCurUrl = cBackUrlListMain.getCurrentItem().getUrl();
-
-        if (nIndex > 0 || mWebView.canGoBack())
-            mWebView.goBackOrForward(-1);   // 이전 페이지로 이동.
-        else {
-            mWebView.clearHistory();
-            mWebView.removeView(mWebView);    // 화면에서 제거
-            mWebView.setVisibility(View.GONE);
-            mWebView.destroy();
-            mWebView = null;
-
-            this.finish();
-        }
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
     private class CreateWebViewClient extends WebViewClient {
         @Override
@@ -279,59 +250,7 @@ public class CreateWebViewActivity extends Activity {
             super.onPageStarted(view, url, favicon);
         }
 
-        public void bak_onPageStarted(WebView view, String url, android.graphics.Bitmap favicon) {
-            // 카드 결제 앱 설치 유무.
-            if (url.startsWith("intent:")) {
-                Intent intent = getIntent();
-                String param = intent.getDataString();
-            }
 
-            if (url.startsWith("ispmobile:") || /* ISP(국민/BC/제주/수협/전북) 카드사 인증앱 */
-                    url.startsWith("vguardstart:") || /* MPI(신한/삼성/씨티/외환) 백신 */
-                    url.startsWith("vguardcheck:") || /* MPI(신한/삼성/씨티/외환) 백신 */
-                    url.startsWith("vguardend:") || /* MPI(신한/삼성/씨티/외환) 백신 */
-                    url.startsWith("smsshinhanansimclick:") || /* MPI(신한/삼성/씨티/외환) 백신 */
-                    url.startsWith("ahnlabv3mobile:") || /* MPI(롯데/농협/하나SK) 백신 */
-                    url.startsWith("droidxantivirus") || /* MPI(현대/신협체크카드) 백신 */
-                    url.startsWith("market:")) /* 안드로이드 마켓 */ {
-                Intent i = new Intent();
-                i.setAction(Intent.ACTION_VIEW);
-                i.setData(Uri.parse(url));
-
-                try { // 백신이 없는 경우 발생하는 예외처리
-                    m_cAct.startActivityForResult(i, Activity.RESULT_OK);
-                    if (url.startsWith("ispmobile:"))
-                        finish();
-                    return;
-                } catch (ActivityNotFoundException ae) {
-                    //market://details?id=kvp.jjy.MispAndroid320
-                    if (url.startsWith("market:")) {
-                        url = url.replaceFirst("market://", "https://play.google.com/store/apps/");
-                        i.setData(Uri.parse(url));
-                        m_cAct.startActivityForResult(i, Activity.RESULT_OK);
-                    }
-
-                    AlertDialog.Builder alert = new AlertDialog.Builder(CreateWebViewActivity.this)
-                            .setTitle("신용카드 백신체크")
-                            .setMessage("신용카드로 처음 결제하시는 경우, 카드사에서 요청하는 플러그인을 설치하셔야 합니다. 결제를 계속 하시려면 [확인] 버튼을 클릭해 주십시오.")
-                            .setPositiveButton("확인", new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                }
-                            });
-                    alert.show();
-                    return;
-                }   // HTTP로 APK직접 다운로드 할 경우 (현대/신협 - droidxantivirus)
-            } else if (url.startsWith("https://ansimclick.hyundaicard.com/")) {
-                try { // URL다운로드 구현
-                    return;
-                } catch (Exception e) {
-                    return;
-                }
-            }
-
-            super.onPageStarted(view, url, favicon);
-        }
 
         public void onPageFinished(WebView view, String url) {
             if (url.endsWith(".mp4")) {
@@ -375,12 +294,8 @@ public class CreateWebViewActivity extends Activity {
         @Override
         public boolean onCreateWindow(WebView view, boolean dialog, boolean userGesture, Message resultMsg) {
             view.removeAllViews();
-            //m_bCreateWindow = true;
 
-            String strCreateUrl = view.getUrl();
 
-            // TODO Auto-generated 8method stub
-            //return super.onCreateWindow(view, dialog, userGesture, resultMsg);
             WebView ChildWebView = new WebView(view.getContext());
             ChildWebView.getSettings().setJavaScriptEnabled(true);
             ChildWebView.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
@@ -434,11 +349,6 @@ public class CreateWebViewActivity extends Activity {
 
         @Override
         public boolean onJsConfirm(WebView view, String url, String message, final JsResult result) {
-            // TODO Auto-generated method stub
-            //return super.onJsConfirm(view, url, message, result);
-            //m_AlertDlg.setMessage("Confirm : " + message);
-            //m_AlertDlg.show();
-
             return true;
         }
 

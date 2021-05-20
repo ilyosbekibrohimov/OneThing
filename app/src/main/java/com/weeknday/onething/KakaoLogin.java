@@ -1,4 +1,4 @@
-package com.weeknday.cheri;
+package com.weeknday.onething;
 
 import android.app.Activity;
 import android.content.pm.PackageInfo;

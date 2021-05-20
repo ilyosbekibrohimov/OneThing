@@ -1,4 +1,4 @@
-package com.weeknday.cheri;
+package com.weeknday.onething;
 
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -84,7 +84,7 @@ public class ImageDialog {
         m_strUrl = strUrl;
         m_strUrl = m_strUrl.replaceFirst("https", "http");
 
-        View view = LayoutInflater.from(m_Context).inflate(com.weeknday.cheri.R.layout.dlg_image, null);
+        View view = LayoutInflater.from(m_Context).inflate(com.weeknday.onething.R.layout.dlg_image, null);
         m_Dlg.setContentView(view);
 
         Thread cThread = new Thread() {
@@ -159,11 +159,9 @@ public class ImageDialog {
                 m_Dlg.getWindow().setAttributes((WindowManager.LayoutParams) params);
             }
 
-            m_ivImage = (ImageView) view.findViewById(com.weeknday.cheri.R.id.dlg_ivImage);
+            m_ivImage = (ImageView) view.findViewById(com.weeknday.onething.R.id.dlg_ivImage);
 
-            //m_ivImage.setImageResource(android.R.color.transparent);
             m_ivImage.setScaleType(ImageView.ScaleType.FIT_CENTER); // 레이아웃 크기에 이미지를 맞춘다
-            //m_ivImage.setScaleType(ImageView.ScaleType.MATRIX);
 
             m_ivImage.setOnTouchListener(ViewListener);
             m_ivImage.setImageBitmap(m_UrlImage);

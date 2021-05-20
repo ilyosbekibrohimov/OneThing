@@ -1,4 +1,4 @@
-package com.weeknday.cheri;
+package com.weeknday.onething;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -11,7 +11,7 @@ import android.telephony.TelephonyManager;
 
 public class AndroidNetwork extends BroadcastReceiver
 {
-    private Context m_cCtx = null;
+    private Context m_cCtx;
 
     private String m_strNetworkType = "";
     private String m_strNetworkConnType = "";

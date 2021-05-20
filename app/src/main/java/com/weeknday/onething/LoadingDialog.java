@@ -1,4 +1,4 @@
-package com.weeknday.cheri;
+package com.weeknday.onething;
 
 import android.app.Dialog;
 import android.content.Context;
@@ -27,7 +27,6 @@ public class LoadingDialog extends Dialog
 
     public void InitCtrl()
     {
-        m_ivImage = (ImageView) findViewById(com.weeknday.cheri.R.id.dlg_ivIcon);
     }
 
     @Override
@@ -37,12 +36,12 @@ public class LoadingDialog extends Dialog
         this.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         super.onCreate(savedInstanceState);
-        setContentView(com.weeknday.cheri.R.layout.dlg_loading);
+        setContentView(com.weeknday.onething.R.layout.dlg_loading);
 
         InitCtrl();
 
         m_ivImage.setVisibility(View.VISIBLE);
-        m_ivImage.setBackgroundResource(com.weeknday.cheri.R.drawable.loading_animation);
+        m_ivImage.setBackgroundResource(com.weeknday.onething.R.drawable.loading_animation);
 
         m_ivImage.setBackgroundColor(Color.TRANSPARENT);
         m_cAnim = (AnimationDrawable) m_ivImage.getDrawable();
