@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">OneThing</string>
+    <string name="app_update_contents">최신 업데이트가 존재합니다.\n업데이트 하시겠습니까?</string>
+    <string name="app_emergency_update_contents">최신 업데이트가 존재합니다.\n업데이트 후 진행해주세요.</string>
+    <string name="app_no">아니요</string>
+    <string name="app_yes">예</string>
+    <string name="app_confirm">확인</string>
+</resources>

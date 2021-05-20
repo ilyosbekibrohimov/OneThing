@@ -1,0 +1,101 @@
+{
+  "project_info": {
+    "project_number": "444450778869",
+    "firebase_url": "https://cheri-188901.firebaseio.com",
+    "project_id": "cheri-188901",
+    "storage_bucket": "cheri-188901.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:444450778869:android:a52e092b0eacd6fd",
+        "android_client_info": {
+          "package_name": "com.weeknday.cheri"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "444450778869-fe9o670aaj50g40pihge18nq56i14dra.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.weeknday.cheri",
+            "certificate_hash": "97aa44218a2ebd32afac3f264d002ece6edde134"
+          }
+        },
+        {
+          "client_id": "444450778869-lhccpbsefndm7vg1lg0d519mn0fv5u2j.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.weeknday.cheri",
+            "certificate_hash": "2d1d32af76f7a8dc8f1fd8540eecb761a0d560f2"
+          }
+        },
+        {
+          "client_id": "444450778869-senchtksu6b6r1a453v3a1eqrkfr6dug.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAg5LvCnRRHbVQGoaxBHwCbOSDa8027ZDs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "444450778869-qdr4v7qko3mijvlhc3ltr7a5fh6emg7r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "444450778869-81komloolhafn5usdkmud0h6tsbsl8uk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.weeknday.cheri",
+                "app_store_id": "1326006344"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:444450778869:android:aabe6792c501ab86bf9fbc",
+        "android_client_info": {
+          "package_name": "com.weeknday.onething"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "444450778869-senchtksu6b6r1a453v3a1eqrkfr6dug.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAg5LvCnRRHbVQGoaxBHwCbOSDa8027ZDs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "444450778869-qdr4v7qko3mijvlhc3ltr7a5fh6emg7r.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "444450778869-81komloolhafn5usdkmud0h6tsbsl8uk.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.weeknday.cheri",
+                "app_store_id": "1326006344"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
