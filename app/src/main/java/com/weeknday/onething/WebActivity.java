@@ -146,7 +146,6 @@ public class WebActivity extends Activity implements GestureDetector.OnGestureLi
     private GestureDetector gestureScanner;
 
     //endregion
-
     //region  overrides
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
@@ -215,7 +214,7 @@ public class WebActivity extends Activity implements GestureDetector.OnGestureLi
         // 메인 핸들러 생성
 
         setWebViewSetting();
-        String strIntro = SendToWebForIntro(FirebaseInstanceId.getInstance().getToken(), m_cDevice.GetSDKVersion(), m_cDevice.GetModel(), m_strCurPkgVerion, ReadEnvForAutoLogin(), ReadEnvForRunCount());
+        String strIntro = SendToWebForIntro(FirebaseInstanceId.getInstance().getToken(), m_cDevice.getSdkVersion(), m_cDevice.GetModel(), m_strCurPkgVerion, ReadEnvForAutoLogin(), ReadEnvForRunCount());
         SendMessageToWeb(UTYPE_POSTMSG_INTRO, strIntro);
 
         WriteEnv("");
@@ -284,7 +283,6 @@ public class WebActivity extends Activity implements GestureDetector.OnGestureLi
                 strCurUrl = cBackUrlListMain.getCurrentItem().getUrl();
 
                 boolean bRunExitDlg = false;
-                int nArrSize = m_strMainPageArray.length;
                 for (String s : m_strMainPageArray) {
                     if (strCurUrl.compareToIgnoreCase(m_strLoadUrl + s) == 0) {
                         bRunExitDlg = true;
@@ -1259,8 +1257,6 @@ public class WebActivity extends Activity implements GestureDetector.OnGestureLi
         }
     }
     //endregion
-
-
     //region  unused overrides
     @Override
     public void onShowPress(MotionEvent e) {
@@ -2082,7 +2078,7 @@ public class WebActivity extends Activity implements GestureDetector.OnGestureLi
                 strRes = "hiroo," + FirebaseInstanceId.getInstance().getToken();
             else if (strArg.compareToIgnoreCase("GetDeviceInfo") == 0) {
                 //모바일토큰, 디바이스정보, 모델정보, 가로사이즈, 세로사이즈
-                strRes = FirebaseInstanceId.getInstance().getToken() + "," + m_cDevice.GetSDKVersion() + "," + m_cDevice.GetModel() + "," + ReadEnvForAutoLogin();// + ","+m_cDevice.GetWidthPx() + "," + m_cDevice.GetHeightPx();
+                strRes = FirebaseInstanceId.getInstance().getToken() + "," + m_cDevice.getSdkVersion() + "," + m_cDevice.GetModel() + "," + ReadEnvForAutoLogin();// + ","+m_cDevice.GetWidthPx() + "," + m_cDevice.GetHeightPx();
                 SendMessageToWeb(UTYPE_POSTMSG_INTRO, strRes);
             } else if (strArg.compareToIgnoreCase("SaveLoginID") == 0)
                 strRes = "True";
