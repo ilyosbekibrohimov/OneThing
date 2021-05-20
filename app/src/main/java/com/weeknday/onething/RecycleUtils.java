@@ -11,9 +11,6 @@ import android.widget.ImageView;
 public class RecycleUtils {
     private RecycleUtils() {
     }
-
-
-
     public static void recursiveRecycle(View root) {
         if (root == null)
             return;

@@ -573,13 +573,12 @@ public class WebActivity extends Activity implements GestureDetector.OnGestureLi
     public JSONObject MakeReturnData(String strApi, String strSNSType) {
         JSONObject jsonRes = null;
 
-        if (strApi.compareToIgnoreCase("CheckApp") == 0)
-            jsonRes = ReturnToWebForCheckApp("hiroo", FirebaseInstanceId.getInstance().getToken());
+        if (strApi.compareToIgnoreCase("CheckApp") == 0) jsonRes = ReturnToWebForCheckApp("hiroo", FirebaseInstanceId.getInstance().getToken());
         else if (strApi.compareToIgnoreCase("GetNetworkInfo") == 0) {
             jsonRes = ReturnToWebForGetNetworkInfo();
-        } else if (strApi.compareToIgnoreCase("ExternSNSAccount") == 0) {
+        }
+        else if (strApi.compareToIgnoreCase("ExternSNSAccount") == 0) {
             m_nStatus = OneThingTypes.STATUS_UNKNOWN;
-
             if (strSNSType.compareToIgnoreCase("kakao") == 0) {
                 showProgressDialog();
 
@@ -592,12 +591,12 @@ public class WebActivity extends Activity implements GestureDetector.OnGestureLi
                     m_cKakao = new KakaoLogin(mMainHandler, WebActivity.this);
                     m_cKakao.KakaoLoginStart();
                 }
-            } else if (strSNSType.compareToIgnoreCase("google") == 0) {
+            }
+            else if (strSNSType.compareToIgnoreCase("google") == 0) {
                 showProgressDialog();
 
                 m_Log.write(AndroidLog.LOGTYPE_INFO, "ExternSNSAccount : GOOGLE");
-                {
-                    m_bIsProcGoogle = true;
+                { m_bIsProcGoogle = true;
 
                     m_Log.write(AndroidLog.LOGTYPE_INFO, "          : START");
                     GoogleActivity.SetHandler(mMainHandler);
@@ -627,7 +626,8 @@ public class WebActivity extends Activity implements GestureDetector.OnGestureLi
                     hideProgressDialog();
 
                 }
-            } else if (strSNSType.compareToIgnoreCase("naver") == 0) {
+            }
+            else if (strSNSType.compareToIgnoreCase("naver") == 0) {
                 if (!m_bIsProcNaver) {
                     m_bIsProcNaver = true;
                     m_cNaver = new NaverLogin(mMainHandler, WebActivity.this);
@@ -635,7 +635,9 @@ public class WebActivity extends Activity implements GestureDetector.OnGestureLi
             }
 
             //jsonRes = ReturnToWebForExternSNSAccount(strSNSType);
-        } else if (strApi.compareToIgnoreCase("MemberWithdraw") == 0) {
+        }
+
+        else if (strApi.compareToIgnoreCase("MemberWithdraw") == 0) {
             int nStatus = 0;
 
             if (strSNSType.compareToIgnoreCase("kakao") == 0) {
@@ -1020,34 +1022,34 @@ public class WebActivity extends Activity implements GestureDetector.OnGestureLi
 
         m_ExitDlg.setMessage("종료 하시겠습니까?");
         m_ExitDlg.setButton(DialogInterface.BUTTON_POSITIVE, "예", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+
+                Thread cThread = new Thread() {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void run() {
+                        String strData = AndroidHttpUtil.DownloadData(m_strLoadUrl + "login/bye");
 
-
-                        Thread cThread = new Thread() {
-                            @Override
-                            public void run() {
-                                String strData = AndroidHttpUtil.DownloadData(m_strLoadUrl + "login/bye");
-
-
-                            }
-                        };
-
-                        cThread.start();
-
-                        try {
-                            cThread.join();
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-
-                        if (m_cAct != null)
-                            m_cAct.finish();
-                        else
-                            System.exit(0);
 
                     }
-                });
+                };
+
+                cThread.start();
+
+                try {
+                    cThread.join();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+                if (m_cAct != null)
+                    m_cAct.finish();
+                else
+                    System.exit(0);
+
+            }
+        });
         m_ExitDlg.setButton(
                 DialogInterface.BUTTON_NEGATIVE, "아니오", new DialogInterface.OnClickListener() {
                     @Override
