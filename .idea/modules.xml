@@ -2,12 +2,12 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Cheri.iml" filepath="$PROJECT_DIR$/.idea/modules/Cheri.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/3rdparty_login_library_android_4.1.4/Cheri.3rdparty_login_library_android_4.1.4.iml" filepath="$PROJECT_DIR$/.idea/modules/3rdparty_login_library_android_4.1.4/Cheri.3rdparty_login_library_android_4.1.4.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Contact-1.0_1/Cheri.Contact-1.0_1.iml" filepath="$PROJECT_DIR$/.idea/modules/Contact-1.0_1/Cheri.Contact-1.0_1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/General-1.0_1/Cheri.General-1.0_1.iml" filepath="$PROJECT_DIR$/.idea/modules/General-1.0_1/Cheri.General-1.0_1.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/Cheri.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/Cheri.app.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/okhttp-3.5.0/Cheri.okhttp-3.5.0.iml" filepath="$PROJECT_DIR$/.idea/modules/okhttp-3.5.0/Cheri.okhttp-3.5.0.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/OneThing.iml" filepath="$PROJECT_DIR$/.idea/modules/OneThing.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/3rdparty_login_library_android_4.1.4/OneThing.3rdparty_login_library_android_4.1.4.iml" filepath="$PROJECT_DIR$/.idea/modules/3rdparty_login_library_android_4.1.4/OneThing.3rdparty_login_library_android_4.1.4.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/Contact-1.0_1/OneThing.Contact-1.0_1.iml" filepath="$PROJECT_DIR$/.idea/modules/Contact-1.0_1/OneThing.Contact-1.0_1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/General-1.0_1/OneThing.General-1.0_1.iml" filepath="$PROJECT_DIR$/.idea/modules/General-1.0_1/OneThing.General-1.0_1.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/app/OneThing.app.iml" filepath="$PROJECT_DIR$/.idea/modules/app/OneThing.app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/okhttp-3.5.0/OneThing.okhttp-3.5.0.iml" filepath="$PROJECT_DIR$/.idea/modules/okhttp-3.5.0/OneThing.okhttp-3.5.0.iml" />
     </modules>
   </component>
 </project>
