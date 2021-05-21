@@ -38,6 +38,8 @@
                 <category android:name="android.intent.category.BROWSABLE" />
                 <data android:scheme="cheri" android:host="com.weeknday.cheri" />
             </intent-filter>
+            <meta-data android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
         <activity
             android:name=".CreateWebViewActivity"

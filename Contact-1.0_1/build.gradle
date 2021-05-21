@@ -1,2 +1,0 @@
-configurations.maybeCreate("default")
-artifacts.add("default", file('Contact-1.0_1-release.aar'))

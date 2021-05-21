@@ -65,10 +65,10 @@ public class NaverLogin extends Activity
     {
         mOAuthLoginInstance = OAuthLogin.getInstance();
         mOAuthLoginInstance.init(m_cContext, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_CLIENT_NAME);
-		/*
-		 * 2015년 8월 이전에 등록하고 앱 정보 갱신을 안한 경우 기존에 설정해준 callback intent url 을 넣어줘야 로그인하는데 문제가 안생긴다.
-		 * 2015년 8월 이후에 등록했거나 그 뒤에 앱 정보 갱신을 하면서 package name 을 넣어준 경우 callback intent url 을 생략해도 된다.
-		 */
+        /*
+         * 2015년 8월 이전에 등록하고 앱 정보 갱신을 안한 경우 기존에 설정해준 callback intent url 을 넣어줘야 로그인하는데 문제가 안생긴다.
+         * 2015년 8월 이후에 등록했거나 그 뒤에 앱 정보 갱신을 하면서 package name 을 넣어준 경우 callback intent url 을 생략해도 된다.
+         */
         //mOAuthLoginInstance.init(mContext, OAUTH_CLIENT_ID, OAUTH_CLIENT_SECRET, OAUTH_CLIENT_NAME, OAUTH_callback_intent_url);
     }
 
@@ -207,8 +207,11 @@ public class NaverLogin extends Activity
     {
         // "Status","StatusMessage","AccessToken","RefreshToken","Google ID","Email","DisplayName"
         String strRes = "";
-        if( m_strAuthState == "" || m_strAuthState.isEmpty() || m_strAuthState.length() == 0 )
+        if(m_strAuthState.equals("") || m_strAuthState.isEmpty()) {
             m_strAuthState = "00";
+        } else {
+            m_strAuthState.length();
+        }
         strRes = m_strAuthState + "," + m_strAuthStateMsg + "," + m_strAToken + "," + m_strRToken + "," + m_strID + ","
                 + m_strEmail + "," + m_strName;
         return strRes;
@@ -293,7 +296,7 @@ public class NaverLogin extends Activity
             }
 
         } catch (Exception e) {
-            System.out.println(e);
+           e.printStackTrace();
         }
     }
 

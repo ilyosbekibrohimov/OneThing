@@ -1,0 +1,70 @@
+package com.weeknday.onething
+
+class OneThingTypes {
+
+
+    companion object {
+
+        const val STATUS_UNKNOWN = -99999
+
+
+        const val STATUS_LOGIN_KAKAO_COMPLETE = 1000
+
+
+        const val STATUS_LOGIN_KAKAO_NOTSIGNEDUP = 1002
+
+
+        const val STATUS_LOGIN_KAKAO_SESSIONOPEN = 1003
+
+
+        const val STATUS_LOGIN_KAKAO_SESSIONCLOSED = 1004
+
+
+        const val STATUS_LOGIN_KAKAO_LOGOUT_SUCCESS = 1500
+
+        const val STATUS_LOGIN_KAKAO_LOGOUT_FAILED = 1501
+
+
+        const val STATUS_LOGIN_KAKAO_SESSIONOPENFAILED = 1998
+
+
+        const val STATUS_LOGIN_KAKAO_UNKNOWN = 1999
+
+
+        const val STATUS_LOGIN_GOOGLE_COMPLETE = 2000
+
+
+        const val STATUS_LOGIN_GOOGLE_SIGNINREQUIRED = 2001
+
+
+        const val STATUS_LOGIN_GOOGLE_LOGOUT_SUCCESS = 2500
+
+
+        const val STATUS_LOGIN_GOOGLE_LOGOUT_FAILED = 2501
+
+
+        const val STATUS_LOGIN_GOOGLE_ONDESTROY = 2996
+
+
+        const val STATUS_LOGIN_GOOGLE_AUTHFAILED = 2997
+
+
+        const val STATUS_LOGIN_GOOGLE_CONNECTIONFAILED = 2998
+
+        const val STATUS_LOGIN_GOOGLE_UNKNOWN = 2999
+
+        const val STATUS_LOGIN_NAVER_COMPLETE = 3000
+
+        const val STATUS_LOGIN_NAVER_USERCANCEL = 3001
+
+        const val STATUS_LOGIN_NAVER_DELETETOKEN = 3002
+
+        const val STATUS_LOGIN_NAVER_LOGOUT_SUCCESS = 3500
+
+        const val STATUS_LOGIN_NAVER_LOGOUT_FAILED = 3501
+
+        const val STATUS_LOGIN_NAVER_UNKNOWN = 3999
+
+    }
+
+}

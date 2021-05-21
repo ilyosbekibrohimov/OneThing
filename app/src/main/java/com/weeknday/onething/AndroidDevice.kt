@@ -12,7 +12,7 @@ class AndroidDevice @RequiresApi(api = Build.VERSION_CODES.O) constructor(cAct: 
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
-    private fun GetDeviceInformation() {
+    private fun getDeviceInformation() {
         m_strSDKVersion = Build.VERSION.SDK
         m_strModel = Build.MODEL
     }
@@ -21,7 +21,7 @@ class AndroidDevice @RequiresApi(api = Build.VERSION_CODES.O) constructor(cAct: 
         return m_strSDKVersion
     }
 
-    fun GetModel(): String {
+    fun getModel(): String {
         return m_strModel
     }
 
@@ -32,7 +32,7 @@ class AndroidDevice @RequiresApi(api = Build.VERSION_CODES.O) constructor(cAct: 
     }
 
     init {
-        GetDeviceInformation()
+        getDeviceInformation()
         DeviceGraphicInformation(cAct)
     }
 }

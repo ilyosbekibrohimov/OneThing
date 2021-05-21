@@ -5,4 +5,6 @@
     <string name="app_no">아니요</string>
     <string name="app_yes">예</string>
     <string name="app_confirm">확인</string>
+    <string name="shortuct1_message">Post</string>
+    <string name="shortuct2_message">Language</string>
 </resources>

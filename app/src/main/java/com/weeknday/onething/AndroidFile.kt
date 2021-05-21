@@ -145,6 +145,7 @@ class AndroidFile {
         const val UERR_EXCEPTION = 3 // Exception 발생.
         const val UERR_NOT_EXIST = 4 // 파일 또는 디렉터리가 존재하지 않음.
         const val UERR_FILE_OPEN = 5 // 파일 오픈 실패.
+        @JvmStatic
         fun removeDirectory(strRemovePath: String?) {
             val listFile = File(strRemovePath).listFiles() ?: return
             try {
