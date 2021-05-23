@@ -6,7 +6,6 @@ import android.app.AlertDialog
 import android.app.DownloadManager
 import android.content.ActivityNotFoundException
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -162,7 +161,7 @@ class WebActivity : Activity(), GestureDetector.OnGestureListener {
         })
         GetAppKeyHash()
         // AlertDialog Initialize
-        initAlertDialog()
+       // initAlertDialog()
 
         // 메인 핸들러 생성
         setWebViewSetting()
@@ -316,7 +315,7 @@ class WebActivity : Activity(), GestureDetector.OnGestureListener {
                     return
                 }
                 val results = arrayOf(getResultUri(data))
-                onReceiveValue()
+               // onReceiveValue()
                 mFilePathCallback = null
             } else {
                 if (mUploadMessage == null) {
@@ -805,40 +804,41 @@ class WebActivity : Activity(), GestureDetector.OnGestureListener {
         return result
     }
 
-    private fun initAlertDialog() {
-        m_AlertDlg = AlertDialog.Builder(this).create()
-
-        m_AlertDlg.setButton(DialogInterface.BUTTON_POSITIVE, "OK", DialogInterface.OnClickListener { dialog, which -> })
-        m_ExitDlg = AlertDialog.Builder(this).create()
-        m_ExitDlg.setMessage("종료 하시겠습니까?")
-        m_ExitDlg.setButton(DialogInterface.BUTTON_POSITIVE, "예", DialogInterface.OnClickListener { dialog, which ->
-                val cThread: Thread = object : Thread() {
-                    override fun run() {
-                        AndroidHttpUtil.downloadData(m_strLoadUrl + "login/bye")
-                    }
-                }
-                cThread.start()
-                try {
-                    cThread.join()
-                } catch (e: InterruptedException) {
-                    e.printStackTrace()
-                }
-                if (m_cAct != null) m_cAct!!.finish() else System.exit(0)
-            })
-        m_ExitDlg.setButton(
-            DialogInterface.BUTTON_NEGATIVE, "아니오",
-            DialogInterface.OnClickListener { dialog, which -> // History 삭제
-                mWebView!!.clearHistory()
-            })
-        m_CallDlg = AlertDialog.Builder(this).create()
-        m_CallDlg.setButton(
-            DialogInterface.BUTTON_POSITIVE, "통화",
-            DialogInterface.OnClickListener { dialog, which -> SendPhoneCall(m_strPhoneNum) })
-        m_CallDlg.setButton(
-            DialogInterface.BUTTON_NEGATIVE, "취소",
-            DialogInterface.OnClickListener { dialog, which -> })
-    }
-
+    /*
+   private fun initAlertDialog() {
+//        m_AlertDlg = AlertDialog.Builder(this).create()
+//
+//        m_AlertDlg.setButton(DialogInterface.BUTTON_POSITIVE, "OK", DialogInterface.OnClickListener { dialog, which -> })
+//        m_ExitDlg = AlertDialog.Builder(this).create()
+//        m_ExitDlg.setMessage("종료 하시겠습니까?")
+//        m_ExitDlg.setButton(DialogInterface.BUTTON_POSITIVE, "예", DialogInterface.OnClickListener { dialog, which ->
+//                val cThread: Thread = object : Thread() {
+//                    override fun run() {
+//                        AndroidHttpUtil.downloadData(m_strLoadUrl + "login/bye")
+//                    }
+//                }
+//                cThread.start()
+//                try {
+//                    cThread.join()
+//                } catch (e: InterruptedException) {
+//                    e.printStackTrace()
+//                }
+//                if (m_cAct != null) m_cAct!!.finish() else System.exit(0)
+//            })
+//        m_ExitDlg.setButton(
+//            DialogInterface.BUTTON_NEGATIVE, "아니오",
+//            DialogInterface.OnClickListener { dialog, which -> // History 삭제
+//                mWebView!!.clearHistory()
+//            })
+//        m_CallDlg = AlertDialog.Builder(this).create()
+//        m_CallDlg.setButton(
+//            DialogInterface.BUTTON_POSITIVE, "통화",
+//            DialogInterface.OnClickListener { dialog, which -> SendPhoneCall(m_strPhoneNum) })
+//        m_CallDlg.setButton(
+//            DialogInterface.BUTTON_NEGATIVE, "취소",
+//            DialogInterface.OnClickListener { dialog, which -> })
+//    }
+*/
     fun setWebViewSetting() {
         val intent = intent
         val param = intent.dataString
@@ -1106,9 +1106,9 @@ class WebActivity : Activity(), GestureDetector.OnGestureListener {
     private inner class MyWebViewClient : WebViewClient() {
         override fun shouldOverrideUrlLoading(view: WebView, url: String): Boolean {
             Log.d("kakaolink", url)
-            return if (url.startsWith(Companion.INTENT_PROTOCOL_START)) {
-                val customUrlStartIndex = Companion.INTENT_PROTOCOL_START.length
-                val customUrlEndIndex = url.indexOf(Companion.INTENT_PROTOCOL_INTENT)
+            return if (url.startsWith(INTENT_PROTOCOL_START)) {
+                val customUrlStartIndex = INTENT_PROTOCOL_START.length
+                val customUrlEndIndex = url.indexOf(INTENT_PROTOCOL_INTENT)
                 if (customUrlEndIndex < 0) {
                     false
                 } else {
@@ -1123,15 +1123,15 @@ class WebActivity : Activity(), GestureDetector.OnGestureListener {
                     } catch (e: ActivityNotFoundException) {
                         Log.d("kakaolink", "error")
                         val packageStartIndex =
-                            customUrlEndIndex + Companion.INTENT_PROTOCOL_INTENT.length
-                        val packageEndIndex = url.indexOf(Companion.INTENT_PROTOCOL_END)
+                            customUrlEndIndex + INTENT_PROTOCOL_INTENT.length
+                        val packageEndIndex = url.indexOf(INTENT_PROTOCOL_END)
                         val packageName = url.substring(
                             packageStartIndex,
                             if (packageEndIndex < 0) url.length else packageEndIndex
                         )
                         val cIntent = Intent(
                             Intent.ACTION_VIEW,
-                            Uri.parse(Companion.GOOGLE_PLAY_STORE_PREFIX + packageName)
+                            Uri.parse(GOOGLE_PLAY_STORE_PREFIX + packageName)
                         )
                         cIntent.flags = Intent.FLAG_ACTIVITY_NEW_TASK
                         baseContext.startActivity(cIntent)
@@ -1144,12 +1144,11 @@ class WebActivity : Activity(), GestureDetector.OnGestureListener {
             }
         }
 
-        companion object {
-            const val INTENT_PROTOCOL_START = "intent:"
-            const val INTENT_PROTOCOL_INTENT = "#Intent;"
-            const val INTENT_PROTOCOL_END = ";end;"
-            const val GOOGLE_PLAY_STORE_PREFIX = "market://details?id="
-        }
+             val INTENT_PROTOCOL_START = "intent:"
+             val INTENT_PROTOCOL_INTENT = "#Intent;"
+             val INTENT_PROTOCOL_END = ";end;"
+             val GOOGLE_PLAY_STORE_PREFIX = "market://details?id="
+
     }
 
     private inner class OneThingWebViewClient : WebViewClient() {
